@@ -1,0 +1,30 @@
+.product-card{
+    border:none;
+    border-radius:15px;
+    overflow:hidden;
+    transition:.4s;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.product-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.product-img{
+    height:320px;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.product-card:hover .product-img{
+    transform:scale(1.08);
+}
+
+.card-body{
+    background:white;
+}
+
+.btn-outline-dark{
+    border-radius:30px;
+}

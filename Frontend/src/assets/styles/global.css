@@ -1,0 +1,15 @@
+body{
+    font-family:'Poppins',sans-serif;
+    background:#FCFAF7;
+    color:#2C2C2C;
+}
+
+a{
+    text-decoration:none;
+}
+
+.section-title{
+    font-size:42px;
+    font-weight:700;
+    color:#8B5E3C;
+}

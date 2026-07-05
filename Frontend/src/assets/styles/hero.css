@@ -1,0 +1,41 @@
+.hero-section {
+    padding: 80px 0;
+    background: #F8F5EF;
+}
+
+/* Small Logo */
+.hero-logo {
+    width: 120px;      /* Change this value as needed */
+    height: auto;
+    display: block;
+    margin: 0 auto 30px; /* Center logo and add space below */
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px); /* Reduced movement */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.hero-section h1 {
+    font-size: 60px;
+    font-weight: 700;
+    color: #2d2d2d;
+}
+
+.hero-section p {
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.hero-section .btn {
+    padding: 12px 30px;
+    border-radius: 30px;
+}

@@ -1,0 +1,21 @@
+.navbar{
+    background:#F5F1E8;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+    padding:15px 0;
+}
+
+.navbar-brand{
+    color:#8B5E3C !important;
+    font-size:34px;
+    font-weight:700;
+}
+
+.nav-link{
+    color:#2C2C2C !important;
+    font-weight:500;
+    margin-left:20px;
+}
+
+.nav-link:hover{
+    color:#8B5E3C !important;
+}
