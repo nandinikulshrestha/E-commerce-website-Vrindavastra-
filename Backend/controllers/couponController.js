@@ -1,4 +1,4 @@
-const Coupon = require("../models/Coupon");
+const Coupon = require("../models/coupon");
 
 // Create Coupon (Admin)
 exports.createCoupon = async (req, res) => {
