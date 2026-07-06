@@ -33,8 +33,10 @@ connectDB();
 //cors
 app.use(
   cors({
-    origin:[ "http://localhost:5173",
-      "https://e-commerce-website-vrindavastra-jxw.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://e-commerce-website-vrindavastra-jxw.vercel.app/",
+    ],
     credentials: true,
   })
 );
