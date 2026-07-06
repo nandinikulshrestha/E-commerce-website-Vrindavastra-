@@ -30,6 +30,8 @@ function Login() {
 
       navigate("/");
     } catch (error) {
+      console.log(error.response);
+      console.log(error.response?.data);
       alert(error.response?.data?.message || "Login Failed");
     }
   };
