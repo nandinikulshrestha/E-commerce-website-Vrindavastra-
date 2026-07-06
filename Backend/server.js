@@ -33,7 +33,8 @@ connectDB();
 //cors
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin:[ "http://localhost:5173",
+      "https://e-commerce-website-vrindavastra-2.onrender.com"],
     credentials: true,
   })
 );
