@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://e-commerce-website-vrindavastra-2.onrender.com",
+  baseURL: "https://e-commerce-website-vrindavastra-2.onrender.com/api",
 });
 
 // Automatically attach JWT token to every request
