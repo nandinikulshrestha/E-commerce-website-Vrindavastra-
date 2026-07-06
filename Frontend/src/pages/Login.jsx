@@ -9,6 +9,7 @@ function Login() {
     email: "",
     password: "",
   });
+  
 
   const handleChange = (e) => {
     setForm({
@@ -69,6 +70,9 @@ function Login() {
         Don't have an account?{" "}
         <Link to="/register">Register</Link>
       </p>
+      <p className="text-end mt-2">
+  <Link to="/forgot-password">Forgot Password?</Link>
+</p>
 
     </div>
   );

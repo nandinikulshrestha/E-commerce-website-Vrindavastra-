@@ -14,6 +14,7 @@ import HelpCenter from "../pages/HelpCenter";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsConditions from "../pages/TermsConditions";
 import ReturnPolicy from "../pages/ReturnPolicy";
+import ForgotPassword from "../pages/ForgotPassword";
 
 function AppRoutes() {
   return (
@@ -32,6 +33,8 @@ function AppRoutes() {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-conditions" element={<TermsConditions />} />
       <Route path="/return-policy" element={<ReturnPolicy />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      
     </Routes>
   );
 }
