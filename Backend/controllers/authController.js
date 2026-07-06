@@ -10,7 +10,6 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -19,38 +18,26 @@ exports.register = async (req, res) => {
       });
     }
 
-    // Hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create User
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
     });
 
-    // Send Welcome Email
     await sendEmail(
       user.email,
       "Welcome to VrindaVastra 🎉",
       `
       <h2>Hello ${user.name},</h2>
-
       <p>Your account has been created successfully.</p>
-
-      <h3>Welcome to <span style="color:green;">VrindaVastra</span></h3>
-
-      <p>Thank you for joining us.</p>
-
-      <br>
-
-      <p>Happy Shopping ❤️</p>
+      <h3>Welcome to VrindaVastra ❤️</h3>
       `
     );
 
     res.status(201).json({
       message: "User Registered Successfully",
-      user,
     });
 
   } catch (error) {
@@ -67,9 +54,9 @@ exports.register = async (req, res) => {
 // ======================
 exports.login = async (req, res) => {
   try {
+
     const { email, password } = req.body;
 
-    // Check Email
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -78,7 +65,6 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Compare Password
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -87,7 +73,6 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Generate JWT Token
     const token = jwt.sign(
       {
         id: user._id,
@@ -111,10 +96,66 @@ exports.login = async (req, res) => {
     });
 
   } catch (error) {
+
     console.log(error);
 
     res.status(500).json({
       message: error.message,
     });
+
   }
+};
+
+// ======================
+// Forgot Password (Send OTP)
+// ======================
+exports.forgotPassword = async (req, res) => {
+
+  try {
+
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    user.resetOTP = otp;
+    user.resetOTPExpire = Date.now() + 10 * 60 * 1000;
+
+    await user.save();
+
+    await sendEmail(
+      user.email,
+      "VrindaVastra Password Reset OTP",
+      `
+      <h2>Password Reset</h2>
+
+      <p>Your OTP is:</p>
+
+      <h1>${otp}</h1>
+
+      <p>OTP valid for 10 minutes.</p>
+      `
+    );
+
+    res.status(200).json({
+      message: "OTP sent successfully",
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+
+  }
+
 };
