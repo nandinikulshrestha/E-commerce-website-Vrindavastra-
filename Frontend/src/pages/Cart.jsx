@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
 
+const BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://e-commerce-website-vrindavastra-2.onrender.com";
+
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +26,6 @@ export default function Cart() {
         },
       });
 
-      // Remove invalid products
       const validCart = res.data.filter((item) => item.product);
 
       setCart(validCart);
@@ -91,7 +95,6 @@ export default function Cart() {
 
   return (
     <>
-
       <div className="container my-5">
         <h2 className="fw-bold mb-4">🛒 Shopping Cart</h2>
 
@@ -101,70 +104,79 @@ export default function Cart() {
           </div>
         ) : (
           <div className="row">
-
             <div className="col-lg-8">
 
-              {cart.map((item) => (
-                <div
-                  className="card mb-3 shadow-sm"
-                  key={item._id}
-                >
-                  <div className="row g-0">
+              {cart.map((item) => {
 
-                    <div className="col-md-3">
+                const imageUrl =
+                  item.product?.image?.length > 0
+                    ? `${BASE_URL}/uploads/${item.product.image[0]}`
+                    : "https://via.placeholder.com/300x300?text=No+Image";
 
-                      <img
-                        src={`http://localhost:5000/uploads/${item.product.image}`}
-                        alt={item.product.name}
-                        className="img-fluid rounded-start"
-                        style={{
-                          height: "200px",
-                          width: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
+                return (
+                  <div
+                    className="card mb-3 shadow-sm"
+                    key={item._id}
+                  >
+                    <div className="row g-0">
 
-                    </div>
+                      <div className="col-md-3">
 
-                    <div className="col-md-9">
-
-                      <div className="card-body">
-
-                        <h4>{item.product.name}</h4>
-
-                        <h5 className="text-success">
-                          ₹{item.product.price}
-                        </h5>
-
-                        <p>
-                          <strong>Size:</strong> {item.size}
-                        </p>
-
-                        <p>
-                          <strong>Quantity:</strong> {item.quantity}
-                        </p>
-
-                        <button
-                          className="btn btn-outline-success me-2"
-                          onClick={() => increaseQuantity(item)}
-                        >
-                          +
-                        </button>
-
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => removeItem(item._id)}
-                        >
-                          Remove
-                        </button>
+                        <img
+                          src={imageUrl}
+                          alt={item.product.name}
+                          className="img-fluid rounded-start"
+                          style={{
+                            height: "200px",
+                            width: "100%",
+                            objectFit: "cover",
+                          }}
+                          onError={(e) => {
+                            e.target.src =
+                              "https://via.placeholder.com/300x300?text=No+Image";
+                          }}
+                        />
 
                       </div>
 
-                    </div>
+                      <div className="col-md-9">
+                        <div className="card-body">
 
+                          <h4>{item.product.name}</h4>
+
+                          <h5 className="text-success">
+                            ₹{item.product.price}
+                          </h5>
+
+                          <p>
+                            <strong>Size:</strong> {item.size}
+                          </p>
+
+                          <p>
+                            <strong>Quantity:</strong> {item.quantity}
+                          </p>
+
+                          <button
+                            className="btn btn-outline-success me-2"
+                            onClick={() => increaseQuantity(item)}
+                          >
+                            +
+                          </button>
+
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => removeItem(item._id)}
+                          >
+                            Remove
+                          </button>
+
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
 
             </div>
 
@@ -195,7 +207,6 @@ export default function Cart() {
 
           </div>
         )}
-
       </div>
     </>
   );

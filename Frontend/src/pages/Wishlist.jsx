@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
 
+const BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://e-commerce-website-vrindavastra-2.onrender.com";
+
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +25,6 @@ export default function Wishlist() {
         },
       });
 
-      // Remove invalid products
       const validWishlist = res.data.filter((item) => item.product);
 
       setWishlist(validWishlist);
@@ -61,7 +65,6 @@ export default function Wishlist() {
 
   return (
     <>
-
       <div className="container my-5">
         <h2 className="fw-bold mb-4">❤️ My Wishlist</h2>
 
@@ -71,44 +74,51 @@ export default function Wishlist() {
           </div>
         ) : (
           <div className="row">
-            {wishlist.map((item) => (
-              <div className="col-md-4 mb-4" key={item._id}>
-                <div className="card shadow h-100">
+            {wishlist.map((item) => {
+              const imageUrl =
+                item.product?.image?.length > 0
+                  ? `${BASE_URL}/uploads/${item.product.image[0]}`
+                  : "https://via.placeholder.com/300x350?text=No+Image";
 
-                  <img
-                    src={
-                      Array.isArray(item.product.image)
-                        ? `http://localhost:5000/uploads/${item.product.image[0]}`
-                        : `http://localhost:5000/uploads/${item.product.image}`
-                    }
-                    alt={item.product.name}
-                    className="card-img-top"
-                    style={{
-                      height: "300px",
-                      objectFit: "cover",
-                    }}
-                  />
+              return (
+                <div className="col-lg-4 col-md-6 mb-4" key={item._id}>
+                  <div className="card shadow h-100">
 
-                  <div className="card-body">
-                    <h5>{item.product.name}</h5>
+                    <img
+                      src={imageUrl}
+                      alt={item.product.name}
+                      className="card-img-top"
+                      style={{
+                        height: "300px",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => {
+                        e.target.src =
+                          "https://via.placeholder.com/300x350?text=No+Image";
+                      }}
+                    />
 
-                    <h4 className="text-success">
-                      ₹{item.product.price}
-                    </h4>
+                    <div className="card-body d-flex flex-column">
+                      <h5>{item.product.name}</h5>
 
-                    <p>{item.product.category}</p>
+                      <h4 className="text-success">
+                        ₹{item.product.price}
+                      </h4>
 
-                    <button
-                      className="btn btn-danger w-100"
-                      onClick={() => removeItem(item._id)}
-                    >
-                      Remove
-                    </button>
+                      <p>{item.product.category}</p>
+
+                      <button
+                        className="btn btn-danger mt-auto"
+                        onClick={() => removeItem(item._id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+
                   </div>
-
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

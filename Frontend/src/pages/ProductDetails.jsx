@@ -3,12 +3,17 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
 
+const BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://e-commerce-website-vrindavastra-2.onrender.com";
+
 function ProductDetails() {
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState("M");
+  const [size, setSize] =useState("M");
 
   useEffect(() => {
     fetchProduct();
@@ -23,7 +28,6 @@ function ProductDetails() {
     }
   };
 
-  // Add To Cart
   const addToCart = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -54,7 +58,6 @@ function ProductDetails() {
     }
   };
 
-  // Add To Wishlist
   const addToWishlist = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -94,17 +97,20 @@ function ProductDetails() {
     );
   }
 
+  const imageUrl =
+    product.image && product.image.length > 0
+      ? `${BASE_URL}/uploads/${product.image[0]}`
+      : "https://via.placeholder.com/500x600?text=No+Image";
+
   return (
     <>
-
       <div className="container my-5">
         <div className="row">
 
           {/* Image */}
-
           <div className="col-md-6 text-center">
             <img
-              src={`http://localhost:5000/uploads/${product.image}`}
+              src={imageUrl}
               alt={product.name}
               className="img-fluid rounded shadow"
               style={{
@@ -115,9 +121,7 @@ function ProductDetails() {
           </div>
 
           {/* Details */}
-
           <div className="col-md-6">
-
             <h2>{product.name}</h2>
 
             <h3 className="text-success mb-3">
@@ -127,16 +131,13 @@ function ProductDetails() {
             <p>{product.description}</p>
 
             <p>
-              <strong>Category :</strong> {product.category}
+              <strong>Category:</strong> {product.category}
             </p>
-
-            {/* Size */}
 
             <div className="mt-4">
               <h5>Select Size</h5>
 
-              <div className="d-flex gap-2">
-
+              <div className="d-flex gap-2 flex-wrap">
                 {["S", "M", "L", "XL", "XXL"].map((item) => (
                   <button
                     key={item}
@@ -150,17 +151,13 @@ function ProductDetails() {
                     {item}
                   </button>
                 ))}
-
               </div>
             </div>
-
-            {/* Quantity */}
 
             <div className="mt-4">
               <h5>Quantity</h5>
 
               <div className="d-flex align-items-center">
-
                 <button
                   className="btn btn-outline-dark"
                   onClick={() =>
@@ -183,14 +180,10 @@ function ProductDetails() {
                 >
                   +
                 </button>
-
               </div>
             </div>
 
-            {/* Buttons */}
-
             <div className="mt-5">
-
               <button
                 className="btn btn-dark btn-lg me-3"
                 onClick={addToCart}
@@ -204,11 +197,8 @@ function ProductDetails() {
               >
                 ❤️ Wishlist
               </button>
-
             </div>
-
           </div>
-
         </div>
       </div>
     </>
