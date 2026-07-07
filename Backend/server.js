@@ -35,7 +35,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://e-commerce-website-vrindavastra-jxw.vercel.app/",
+      "https://e-commerce-website-vrindavastra-jxw.vercel.app",
     ],
     credentials: true,
   })
