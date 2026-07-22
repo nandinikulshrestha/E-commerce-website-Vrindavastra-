@@ -47,7 +47,6 @@ app.use(express.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static Folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
