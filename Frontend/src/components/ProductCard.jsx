@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 
 const BASE_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:5000"
-    : "https://e-commerce-website-vrindavastra-2.onrender.com";
+  "https://e-commerce-website-vrindavastra-2.onrender.com";
 
 export default function ProductCard({ product }) {
   const imageUrl =
     product.image && product.image.length > 0
-      ? `${BASE_URL}/uploads/${product.image[0]}`
+      ? `${BASE_URL}/uploads/${encodeURIComponent(product.image[0])}`
       : "https://via.placeholder.com/300x350?text=No+Image";
 
   return (
@@ -27,7 +25,8 @@ export default function ProductCard({ product }) {
             borderTopRightRadius: "16px",
           }}
           onError={(e) => {
-            e.target.src =
+            e.currentTarget.onerror = null;
+            e.currentTarget.src =
               "https://via.placeholder.com/300x350?text=No+Image";
           }}
         />

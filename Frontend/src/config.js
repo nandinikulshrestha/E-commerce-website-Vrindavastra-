@@ -1,0 +1,1 @@
+export const API_URL = "https://e-commerce-website-vrindavastra-2.onrender.com";

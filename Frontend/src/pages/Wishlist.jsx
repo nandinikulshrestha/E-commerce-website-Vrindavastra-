@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
 
-const BASE_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:5000"
-    : "https://e-commerce-website-vrindavastra-2.onrender.com";
+const BASE_URL ="https://e-commerce-website-vrindavastra-2.onrender.com";
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
