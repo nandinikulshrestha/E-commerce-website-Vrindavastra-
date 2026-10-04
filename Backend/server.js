@@ -23,9 +23,7 @@ const app = express();
 
 connectDB();
 
-// ==========================
-// CORS
-// ==========================
+
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -71,29 +69,13 @@ app.use(
   })
 );
 
-
-
-// ==========================
-// Body Parser
-// ==========================
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-// ==========================
-// Static uploads
-// ==========================
 
 app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads"))
 );
-
-
-// ==========================
-// Routes
-// ==========================
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
@@ -108,10 +90,6 @@ app.use("/api/address", addressRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 
-// ==========================
-// Protected Test Route
-// ==========================
-
 app.get("/api/profile", auth, (req, res) => {
   res.json({
     message: "Protected Route Accessed",
@@ -120,18 +98,9 @@ app.get("/api/profile", auth, (req, res) => {
 });
 
 
-// ==========================
-// Home
-// ==========================
-
 app.get("/", (req, res) => {
   res.send("🚀 VrindaVastra API Running...");
 });
-
-
-// ==========================
-// Start Server
-// ==========================
 
 const PORT = process.env.PORT || 5000;
 
